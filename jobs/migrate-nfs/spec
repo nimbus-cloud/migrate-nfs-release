@@ -6,4 +6,8 @@ templates:
 
 packages: []
 
-properties: {}
+properties:
+  nfs-migrate.source_nfs_share:
+    description: "nfs share to copy files from"
+  nfs-migrate.destination_nfs_share:
+    description: "nfs share to copy files to"

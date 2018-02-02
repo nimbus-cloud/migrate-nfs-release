@@ -2,6 +2,22 @@
 
 set -e -x
 
-echo "Hello world!"
+echo "Starting..."
 
-exit 0
+mkdir source_nfs destination_nfs
+
+SOURCE_NFS_SHARE=<%= p("nfs-migrate.source_nfs_share") %>
+DESTINATION_NFS_SHARE=<%= p("nfs-migrate.destination_nfs_share") %>
+
+mount -t nfs $SOURCE_NFS_SHARE source_nfs/
+mount -t nfs $DESTINATION_NFS_SHARE destination_nfs/
+
+SIZE_OF_DATA_SOURCE=`du -sh source_nfs | awk '{ print $1}'`
+
+echo "Copying $SIZE_OF_DATA_SOURCE from $SOURCE_NFS_SHARE -> $DESTINATION_NFS_SHARE"
+
+rsync -azh source_nfs/ destination_nfs
+
+SIZE_OF_DATA_DESTINATION=`du -sh destination_nfs | awk '{ print $1}'`
+
+echo "Copied $SIZE_OF_DATA_DESTINATION of data successfully"

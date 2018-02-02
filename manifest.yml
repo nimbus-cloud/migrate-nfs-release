@@ -21,7 +21,10 @@ instance_groups:
   jobs:
   - name: migrate-nfs
     release: migrate-nfs
-    properties: {}
+    properties:
+      nfs-migrate:
+        source_nfs_share: ((source_nfs_share))
+        destination_nfs_share: ((destination_nfs_share))
   vm_type: 4c.4r
   stemcell: trusty
   networks:
