@@ -1,0 +1,26 @@
+This deployment can be used for migrting NFS data from one location to another.
+
+
+Create and upload files to your BOSH director: 
+
+```
+$ bosh-cli create-release --name migrate-nfs --force
+$ bosh-cli -e <YOUR-ENV> upload-release
+```
+
+Create BOSH deployment:
+
+```
+bosh-cli -e <YOUR-ENV> \
+-d migrate-nfs \
+deploy manifest.yml \
+-v=source_nfs_share=<NFS-SOURCE-SHARE> \ 
+-v=destination_nfs_share=<NFS-DESTINATION-SHARE> \ 
+--no-redact
+```
+
+Run errand:
+
+```
+$ bosh-cli -e <YOUR-ENV> -d migrate-nfs run-errand migrate-nfs
+```
