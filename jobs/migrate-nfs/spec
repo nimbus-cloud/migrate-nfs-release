@@ -1,0 +1,9 @@
+---
+name: migrate-nfs
+
+templates:
+  migrate.erb: bin/run
+
+packages: []
+
+properties: {}

@@ -1,0 +1,32 @@
+---
+name: migrate-nfs
+
+update:
+  canaries: 1
+  max_in_flight: 3
+  serial: false
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000
+
+stemcells:
+- alias: trusty
+  os: ubuntu-trusty
+  version: latest
+
+instance_groups:
+- name: migrate-nfs
+  azs: [z1]
+  lifecycle: errand
+  instances: 1
+  jobs:
+  - name: migrate-nfs
+    release: migrate-nfs
+    properties: {}
+  vm_type: 4c.4r
+  stemcell: trusty
+  networks:
+  - name: db
+
+releases:
+- name: migrate-nfs
+  version: latest
